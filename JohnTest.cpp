@@ -550,7 +550,7 @@ int GetACC( REALobject instance ) {
 	ClassData( TestClassDefinition, instance, TestClassData, me );
 
         if(VNnm.try_lock()){
-		accstatus = pVNData->accData.accStatus;
+		accstatus = pVNData->accData.accActiveFlag;
                 VNnm.unlock();
         }
         else    {
@@ -562,7 +562,7 @@ int GetACC( REALobject instance ) {
 
 double GetDistance( REALobject instance ) {
 
-	int closestobject =  -1234;
+	float closestobject =  -1234;
 
         named_mutex mutexFront(open_only, F_RADAR_MUTEX);
 
@@ -572,8 +572,8 @@ double GetDistance( REALobject instance ) {
 	{
 		if((FrontRadarShared->numObjects) > 0)
 		{
-			printf("closestObject: %d\n", (int) (FrontRadarShared->closestObject));
-			closestobject << ((int) (FrontRadarShared->closestObject));
+			printf("closestObject: %f\n", FrontRadarShared->closestObject);
+			closestobject = FrontRadarShared->closestObject;
 		}
 		else
 			cout << "No radar targets" << endl;
@@ -584,7 +584,7 @@ double GetDistance( REALobject instance ) {
                 cout << "Front radar shared memory is LOCKED" << endl;
 	}
 
-	return (double)closestobject;
+	return (float)closestobject;
 }
 
 double GetHeading( REALobject instance ) {
@@ -655,7 +655,7 @@ double GetLong( REALobject instance ) {
 
 double GetSetSpeed( REALobject instance ) {
 
-	int setspeed = -1234;
+	double setspeed = -1234.56;
 
 	named_mutex VNnm(open_only,VEHICLE_NETWORK_MUTEX);
 
@@ -674,7 +674,7 @@ double GetSetSpeed( REALobject instance ) {
 
 double GetSpeed( REALobject instance ) {
 
-	int vehiclespeed = -1234;
+	double vehiclespeed = -1234.56;
 	int wheelspeed = -1234;
 
 	named_mutex VNnm(open_only,VEHICLE_NETWORK_MUTEX);
