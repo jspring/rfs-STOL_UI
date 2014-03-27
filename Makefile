@@ -53,6 +53,7 @@ all: CreateBuildObjDir $(OBJS)
 
 CreateBuildObjDir:
 	mkdir -p $(BUILDOBJDIR)
+	make -C $(STOLDIR)
 
 $(BUILDOBJDIR)/JohnTest.o: $(SONAME).cpp
 	$(CC) $(CFLAGS) $(SONAME).cpp -c -o $@
